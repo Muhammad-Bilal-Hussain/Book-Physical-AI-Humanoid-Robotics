@@ -1,0 +1,294 @@
+# API Contract: Digital Twin Simulation Educational Content
+
+**Feature**: 002-digital-twin-simulation
+**Date**: 2026-01-09
+**Version**: 1.0.0
+
+## Overview
+
+This document specifies the API contracts for the Digital Twin Simulation educational content module. Since this is an educational content module rather than a traditional software API, the "contracts" define the interfaces between different components of the learning system and the expected inputs/outputs of educational activities.
+
+## Educational Content API
+
+### Chapter 1: Digital Twins for Physical AI
+
+#### Endpoint: `/chapter-1/concepts`
+**Method**: GET
+**Description**: Retrieve core concepts about Digital Twins in robotics
+
+**Request**:
+- Headers: None required
+- Parameters: None
+- Body: None
+
+**Response**:
+```json
+{
+  "chapter_id": "chapter-1",
+  "title": "Digital Twins for Physical AI",
+  "concepts": [
+    {
+      "concept_id": "dt-definition",
+      "name": "Digital Twin Definition",
+      "description": "Virtual representation of a physical robot that mirrors its real-world counterpart in behavior and characteristics",
+      "learning_objectives": [
+        "Explain the concept of Digital Twins",
+        "Identify benefits of Digital Twins in robotics",
+        "Compare simulation vs. real-world testing"
+      ]
+    },
+    {
+      "concept_id": "dt-evolution",
+      "name": "Evolution of Digital Twins",
+      "description": "Historical development of Digital Twin concepts from manufacturing to robotics",
+      "learning_objectives": [
+        "Trace the evolution of Digital Twin concepts",
+        "Identify key milestones in Digital Twin development",
+        "Connect Digital Twin evolution to robotics applications"
+      ]
+    }
+  ],
+  "duration_hours": 4,
+  "prerequisites": [
+    "Basic robotics concepts",
+    "Module 1: ROS 2 fundamentals"
+  ]
+}
+```
+
+### Chapter 2: Physics Simulation with Gazebo
+
+#### Endpoint: `/chapter-2/gazebo-physics`
+**Method**: GET
+**Description**: Retrieve content about Gazebo physics simulation
+
+**Request**:
+- Headers: None required
+- Parameters: None
+- Body: None
+
+**Response**:
+```json
+{
+  "chapter_id": "chapter-2",
+  "title": "Physics Simulation with Gazebo",
+  "concepts": [
+    {
+      "concept_id": "physics-gravity",
+      "name": "Gravity Simulation",
+      "description": "How Gazebo simulates gravitational forces affecting robots",
+      "learning_objectives": [
+        "Explain gravity simulation in Gazebo",
+        "Configure gravity parameters",
+        "Analyze effects of gravity on robot movement"
+      ]
+    },
+    {
+      "concept_id": "physics-collisions",
+      "name": "Collision Detection",
+      "description": "Methods Gazebo uses to detect and respond to collisions",
+      "learning_objectives": [
+        "Describe collision detection algorithms",
+        "Set up collision models",
+        "Test robot collision responses"
+      ]
+    }
+  ],
+  "duration_hours": 5,
+  "prerequisites": [
+    "Chapter 1 concepts",
+    "Basic physics knowledge"
+  ]
+}
+```
+
+### Chapter 3: High-Fidelity Interaction with Unity
+
+#### Endpoint: `/chapter-3/unity-visualization`
+**Method**: GET
+**Description**: Retrieve content about Unity visualization and interaction
+
+**Request**:
+- Headers: None required
+- Parameters: None
+- Body: None
+
+**Response**:
+```json
+{
+  "chapter_id": "chapter-3",
+  "title": "High-Fidelity Interaction with Unity",
+  "concepts": [
+    {
+      "concept_id": "unity-rendering",
+      "name": "Photorealistic Rendering",
+      "description": "Unity's capabilities for creating realistic visual environments",
+      "learning_objectives": [
+        "Explain Unity's rendering pipeline",
+        "Create realistic environments",
+        "Optimize rendering performance"
+      ]
+    },
+    {
+      "concept_id": "hri-scenarios",
+      "name": "Human-Robot Interaction",
+      "description": "Designing interfaces for human-robot interaction in simulation",
+      "learning_objectives": [
+        "Design HRI scenarios",
+        "Implement interaction interfaces",
+        "Evaluate HRI effectiveness"
+      ]
+    }
+  ],
+  "duration_hours": 4,
+  "prerequisites": [
+    "Chapter 1 concepts",
+    "Basic Unity knowledge"
+  ]
+}
+```
+
+### Chapter 4: Simulating Robotic Sensors
+
+#### Endpoint: `/chapter-4/sensor-simulation`
+**Method**: GET
+**Description**: Retrieve content about sensor simulation
+
+**Request**:
+- Headers: None required
+- Parameters: None
+- Body: None
+
+**Response**:
+```json
+{
+  "chapter_id": "chapter-4",
+  "title": "Simulating Robotic Sensors",
+  "concepts": [
+    {
+      "concept_id": "lidar-simulation",
+      "name": "LiDAR Simulation",
+      "description": "Simulating LiDAR sensors for navigation and mapping",
+      "learning_objectives": [
+        "Configure LiDAR simulation",
+        "Generate synthetic LiDAR data",
+        "Use LiDAR data for navigation"
+      ]
+    },
+    {
+      "concept_id": "camera-simulation",
+      "name": "Camera Simulation",
+      "description": "Simulating depth cameras for 3D perception",
+      "learning_objectives": [
+        "Set up camera simulation",
+        "Generate synthetic camera data",
+        "Apply camera data to perception tasks"
+      ]
+    }
+  ],
+  "duration_hours": 4,
+  "prerequisites": [
+    "Chapter 1-3 concepts",
+    "Basic sensor knowledge"
+  ]
+}
+```
+
+## Assessment API
+
+### Endpoint: `/assessments/chapter-{id}`
+**Method**: POST
+**Description**: Submit assessment responses for evaluation
+
+**Request**:
+```json
+{
+  "student_id": "unique-student-identifier",
+  "chapter_id": "chapter-1",
+  "responses": [
+    {
+      "question_id": "dt-definition-001",
+      "answer": "Student's answer to the question",
+      "timestamp": "2026-01-09T10:00:00Z"
+    }
+  ]
+}
+```
+
+**Response**:
+```json
+{
+  "assessment_id": "assessment-unique-id",
+  "chapter_id": "chapter-1",
+  "student_id": "unique-student-identifier",
+  "score": 0.85,
+  "pass_threshold_met": true,
+  "feedback": [
+    {
+      "question_id": "dt-definition-001",
+      "correct": true,
+      "explanation": "Detailed feedback on the response"
+    }
+  ],
+  "completion_timestamp": "2026-01-09T10:15:00Z"
+}
+```
+
+## Integration API
+
+### Endpoint: `/integration/ros2-messages`
+**Method**: GET
+**Description**: Retrieve information about ROS 2 messages used in simulation
+
+**Response**:
+```json
+{
+  "message_types": [
+    {
+      "name": "sensor_msgs/LaserScan",
+      "description": "Message type for LiDAR sensor data",
+      "fields": [
+        {
+          "name": "header",
+          "type": "std_msgs/Header",
+          "description": "Timestamp and frame ID"
+        },
+        {
+          "name": "ranges",
+          "type": "float32[]",
+          "description": "Distance measurements"
+        }
+      ]
+    },
+    {
+      "name": "sensor_msgs/Image",
+      "description": "Message type for camera sensor data",
+      "fields": [
+        {
+          "name": "header",
+          "type": "std_msgs/Header",
+          "description": "Timestamp and frame ID"
+        },
+        {
+          "name": "data",
+          "type": "uint8[]",
+          "description": "Image pixel data"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Error Responses
+
+All endpoints follow standard HTTP error codes:
+
+- `400 Bad Request`: Invalid request format or parameters
+- `401 Unauthorized`: Authentication required
+- `404 Not Found`: Requested resource does not exist
+- `500 Internal Server Error`: Unexpected server error
+
+## Versioning
+
+This API follows semantic versioning. Breaking changes will increment the major version number.
