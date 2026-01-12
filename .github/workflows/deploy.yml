@@ -10,18 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: my-website  # <-- important, your package.json is here
+        working-directory: my-website  # <-- your project folder
 
     steps:
-      # 1️⃣ Checkout your repo
+      # 1️⃣ Checkout repo
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Setup Node.js
+      # 2️⃣ Setup Node.js v20 (required by Docusaurus)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       # 3️⃣ Install dependencies
       - name: Install Dependencies
@@ -31,9 +31,9 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      # 5️⃣ Deploy to GitHub Pages (if you use next export)
+      # 5️⃣ Deploy to GitHub Pages (if using docusaurus export)
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: my-website/out  # <-- next export output folder
+          publish_dir: my-website/build  # Docusaurus output folder
