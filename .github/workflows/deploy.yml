@@ -1,56 +1,39 @@
-name: Deploy Docusaurus to GitHub Pages
+name: Deploy My Website
 
 on:
   push:
     branches:
-      - main
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+      - main  # Trigger deploy when you push to main branch
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     defaults:
       run:
-        working-directory: my-website   # <-- yahan folder specify kiya
+        working-directory: my-website  # <-- important, your package.json is here
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      # 1️⃣ Checkout your repo
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: npm
+          node-version: '18'
 
-      - name: Install dependencies
+      # 3️⃣ Install dependencies
+      - name: Install Dependencies
         run: npm install
 
-      - name: Build Docusaurus
+      # 4️⃣ Build your project
+      - name: Build Project
         run: npm run build
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: build   # my-website/build folder se upload hoga
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
+      # 5️⃣ Deploy to GitHub Pages (if you use next export)
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: my-website/out  # <-- next export output folder
