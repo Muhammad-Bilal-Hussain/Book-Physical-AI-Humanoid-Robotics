@@ -11,13 +11,11 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://your-docusaurus-site.example.com',
-  baseUrl: '/',
-
+  url: 'https://muhammad-bilal-hussain.github.io',
+  baseUrl: '/Book-Physical-AI-Humanoid-Robotics/',
   organizationName: 'Muhammad-Bilal-Hussain',
   projectName: 'Book-Physical-AI-Humanoid-Robotics',
 
-  // 🔴 IMPORTANT FIX
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
@@ -32,7 +30,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.ts'),
-         routeBasePath: 'docs',
+          routeBasePath: 'docs',
           editUrl:
             'https://github.com/Muhammad-Bilal-Hussain/Book-Physical-AI-Humanoid-Robotics',
         },
