@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-module-1-ros2/chapter-2-primitives" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Chapter 2: Communication Primitives in ROS 2 | Physical AI &amp; Humanoid Robotics</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://muhammad-bilal-hussain.github.io/Book-Physical-AI-Humanoid-Robotics/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://muhammad-bilal-hussain.github.io/Book-Physical-AI-Humanoid-Robotics/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://muhammad-bilal-hussain.github.io/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-2-primitives"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Chapter 2: Communication Primitives in ROS 2 | Physical AI &amp; Humanoid Robotics"><meta data-rh="true" name="description" content="Node Definition and Explanation"><meta data-rh="true" property="og:description" content="Node Definition and Explanation"><link data-rh="true" rel="icon" href="/Book-Physical-AI-Humanoid-Robotics/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://muhammad-bilal-hussain.github.io/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-2-primitives"><link data-rh="true" rel="alternate" href="https://muhammad-bilal-hussain.github.io/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-2-primitives" hreflang="en"><link data-rh="true" rel="alternate" href="https://muhammad-bilal-hussain.github.io/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-2-primitives" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Chapter 2: Communication Primitives in ROS 2","item":"https://muhammad-bilal-hussain.github.io/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-2-primitives"}]}</script><link rel="alternate" type="application/rss+xml" href="/Book-Physical-AI-Humanoid-Robotics/blog/rss.xml" title="Physical AI &amp; Humanoid Robotics RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/Book-Physical-AI-Humanoid-Robotics/blog/atom.xml" title="Physical AI &amp; Humanoid Robotics Atom Feed"><link rel="stylesheet" href="/Book-Physical-AI-Humanoid-Robotics/assets/css/styles.9c53a5ce.css">
+<script src="/Book-Physical-AI-Humanoid-Robotics/assets/js/runtime~main.697fff44.js" defer="defer"></script>
+<script src="/Book-Physical-AI-Humanoid-Robotics/assets/js/main.f7b42da1.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/Book-Physical-AI-Humanoid-Robotics/img/logo.svg"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Book-Physical-AI-Humanoid-Robotics/"><div class="navbar__logo"><img src="/Book-Physical-AI-Humanoid-Robotics/img/logo.svg" alt="Physical AI Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/Book-Physical-AI-Humanoid-Robotics/img/logo.svg" alt="Physical AI Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Physical AI Book</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Book-Physical-AI-Humanoid-Robotics/docs/docs">Text Book</a><a class="navbar__item navbar__link" href="/Book-Physical-AI-Humanoid-Robotics/blog">Blog</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/Muhammad-Bilal-Hussain/Book-Physical-AI-Humanoid-Robotics" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Book-Physical-AI-Humanoid-Robotics/docs/docs"><span title="Physical AI &amp; Humanoid Robotics" class="linkLabel_WmDU">Physical AI &amp; Humanoid Robotics</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-1-architecture"><span title="module-1-ros2" class="categoryLinkLabel_W154">module-1-ros2</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-1-architecture"><span title="Chapter 1: ROS 2 as the Nervous System of Physical AI" class="linkLabel_WmDU">Chapter 1: ROS 2 as the Nervous System of Physical AI</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-2-primitives"><span title="Chapter 2: Communication Primitives in ROS 2" class="linkLabel_WmDU">Chapter 2: Communication Primitives in ROS 2</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-3-ai-integration"><span title="Chapter 3: Bridging AI Agents with ROS 2 using rclpy" class="linkLabel_WmDU">Chapter 3: Bridging AI Agents with ROS 2 using rclpy</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-4-urdf-modeling"><span title="Chapter 4: Modeling the Humanoid Body with URDF" class="linkLabel_WmDU">Chapter 4: Modeling the Humanoid Body with URDF</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2"><span title="Physical AI &amp; Humanoid Robotics" class="linkLabel_WmDU">Physical AI &amp; Humanoid Robotics</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-2-digital-twin/"><span title="Module 2: The Digital Twin (Gazebo &amp; Unity)" class="categoryLinkLabel_W154">Module 2: The Digital Twin (Gazebo &amp; Unity)</span></a><button aria-label="Expand sidebar category &#x27;Module 2: The Digital Twin (Gazebo &amp; Unity)&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-3-isaac-ai-brain/architecture-diagram"><span title="module-3-isaac-ai-brain" class="categoryLinkLabel_W154">module-3-isaac-ai-brain</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-4-vla-robotics/architecture-diagram"><span title="module-4-vla-robotics" class="categoryLinkLabel_W154">module-4-vla-robotics</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/Book-Physical-AI-Humanoid-Robotics/docs/references/apa-citation-guide"><span title="references" class="categoryLinkLabel_W154">references</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/Book-Physical-AI-Humanoid-Robotics/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">module-1-ros2</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Chapter 2: Communication Primitives in ROS 2</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Chapter 2: Communication Primitives in ROS 2</h1></header>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="node-definition-and-explanation">Node Definition and Explanation<a href="#node-definition-and-explanation" class="hash-link" aria-label="Direct link to Node Definition and Explanation" title="Direct link to Node Definition and Explanation" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-a-node">What is a Node?<a href="#what-is-a-node" class="hash-link" aria-label="Direct link to What is a Node?" title="Direct link to What is a Node?" translate="no">​</a></h3>
+<p>In ROS 2, a node is a fundamental component that performs computation. Nodes are the basic building blocks of a ROS 2 system. Each node typically handles a specific function, such as sensor processing, path planning, or motor control. Nodes are designed to be modular and independent, allowing for flexible and scalable robot systems.</p>
+<p>Technically, a node is an instance of a ROS 2 process that has access to the ROS 2 communication infrastructure. Each node can:</p>
+<ul>
+<li class="">Publish messages to topics</li>
+<li class="">Subscribe to messages from topics</li>
+<li class="">Provide services</li>
+<li class="">Call services</li>
+<li class="">Send and receive actions</li>
+<li class="">Manage parameters</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="node-characteristics">Node Characteristics<a href="#node-characteristics" class="hash-link" aria-label="Direct link to Node Characteristics" title="Direct link to Node Characteristics" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="independence">Independence<a href="#independence" class="hash-link" aria-label="Direct link to Independence" title="Direct link to Independence" translate="no">​</a></h4>
+<p>Nodes operate independently of each other. This means that if one node fails, it doesn&#x27;t necessarily bring down the entire system. This independence is crucial for robot safety and reliability.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="single-responsibility">Single Responsibility<a href="#single-responsibility" class="hash-link" aria-label="Direct link to Single Responsibility" title="Direct link to Single Responsibility" translate="no">​</a></h4>
+<p>Each node should have a single, well-defined responsibility. For example:</p>
+<ul>
+<li class="">A camera driver node handles camera data acquisition</li>
+<li class="">A localization node estimates the robot&#x27;s position</li>
+<li class="">A motor controller node sends commands to motors</li>
+</ul>
+<p>This approach follows the single responsibility principle, making the system easier to understand, test, and maintain.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="communication-interface">Communication Interface<a href="#communication-interface" class="hash-link" aria-label="Direct link to Communication Interface" title="Direct link to Communication Interface" translate="no">​</a></h4>
+<p>Nodes communicate with each other through ROS 2&#x27;s communication primitives: topics, services, and actions. This allows nodes to be developed separately and then combined to create complex behaviors.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="creating-nodes">Creating Nodes<a href="#creating-nodes" class="hash-link" aria-label="Direct link to Creating Nodes" title="Direct link to Creating Nodes" translate="no">​</a></h3>
+<p>Nodes are created using client libraries like rclpy (Python) or rclcpp (C++). Here&#x27;s a conceptual example of what happens when creating a node:</p>
+<ol>
+<li class="">Initialize the ROS 2 client library</li>
+<li class="">Create a node with a unique name</li>
+<li class="">Create publishers, subscribers, services, or other communication interfaces</li>
+<li class="">Implement the node&#x27;s functionality</li>
+<li class="">Spin the node to process callbacks</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="node-lifecycle">Node Lifecycle<a href="#node-lifecycle" class="hash-link" aria-label="Direct link to Node Lifecycle" title="Direct link to Node Lifecycle" translate="no">​</a></h3>
+<p>ROS 2 provides a lifecycle system for nodes that allows for more sophisticated management of complex systems. The lifecycle states include:</p>
+<ul>
+<li class="">Unconfigured: The node is created but not yet configured</li>
+<li class="">Inactive: The node is configured but not yet activated</li>
+<li class="">Active: The node is running and performing its function</li>
+<li class="">Finalized: The node has been shut down</li>
+</ul>
+<p>This lifecycle system is particularly useful for humanoid robots where different subsystems may need to be brought up in a specific order or deactivated for safety reasons.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="naming-and-namespaces">Naming and Namespaces<a href="#naming-and-namespaces" class="hash-link" aria-label="Direct link to Naming and Namespaces" title="Direct link to Naming and Namespaces" translate="no">​</a></h3>
+<p>Nodes have unique names within the ROS 2 system. To avoid naming conflicts, ROS 2 supports namespaces, which allow nodes to be organized hierarchically. For example, a humanoid robot might have nodes named:</p>
+<ul>
+<li class=""><code>/left_arm/controller</code></li>
+<li class=""><code>/right_arm/controller</code></li>
+<li class=""><code>/torso/sensors</code></li>
+<li class=""><code>/head/camera</code></li>
+</ul>
+<p>This naming convention helps organize complex robot systems and prevents naming conflicts.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="node-management">Node Management<a href="#node-management" class="hash-link" aria-label="Direct link to Node Management" title="Direct link to Node Management" translate="no">​</a></h3>
+<p>ROS 2 provides tools for managing nodes:</p>
+<ul>
+<li class=""><code>ros2 node list</code>: Shows all active nodes</li>
+<li class=""><code>ros2 node info &lt;node_name&gt;</code>: Shows information about a specific node</li>
+<li class="">Launch files: Allow multiple nodes to be started together with specific configurations</li>
+</ul>
+<p>These tools are essential for debugging and monitoring robot systems during development and operation.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="topic-definition-and-explanation">Topic Definition and Explanation<a href="#topic-definition-and-explanation" class="hash-link" aria-label="Direct link to Topic Definition and Explanation" title="Direct link to Topic Definition and Explanation" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-a-topic">What is a Topic?<a href="#what-is-a-topic" class="hash-link" aria-label="Direct link to What is a Topic?" title="Direct link to What is a Topic?" translate="no">​</a></h3>
+<p>A topic in ROS 2 is a named channel through which nodes exchange messages. Topics implement a publish-subscribe communication pattern, where one or more nodes publish messages to a topic, and one or more nodes subscribe to messages from that topic. This creates an asynchronous, decoupled communication system where publishers and subscribers don&#x27;t need to know about each other.</p>
+<p>Topics are fundamental to ROS 2&#x27;s distributed architecture. They allow data to flow between nodes without tight coupling, enabling flexible and scalable robot systems.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="topic-characteristics">Topic Characteristics<a href="#topic-characteristics" class="hash-link" aria-label="Direct link to Topic Characteristics" title="Direct link to Topic Characteristics" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="asynchronous-communication">Asynchronous Communication<a href="#asynchronous-communication" class="hash-link" aria-label="Direct link to Asynchronous Communication" title="Direct link to Asynchronous Communication" translate="no">​</a></h4>
+<p>Topics provide asynchronous communication between nodes. Publishers send messages without waiting for responses, and subscribers receive messages as they arrive. This allows for efficient data distribution in real-time systems.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="named-channels">Named Channels<a href="#named-channels" class="hash-link" aria-label="Direct link to Named Channels" title="Direct link to Named Channels" translate="no">​</a></h4>
+<p>Topics are identified by unique names (e.g., <code>/sensor_data</code>, <code>/robot_state</code>). These names follow a hierarchical namespace system, similar to file paths in operating systems.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="message-types">Message Types<a href="#message-types" class="hash-link" aria-label="Direct link to Message Types" title="Direct link to Message Types" translate="no">​</a></h4>
+<p>Each topic has a specific message type that defines the structure of the data being exchanged. All messages published to a topic must conform to this type. Common message types include:</p>
+<ul>
+<li class=""><code>std_msgs</code>: Basic data types (integers, floats, strings)</li>
+<li class=""><code>sensor_msgs</code>: Sensor data (images, laser scans, joint states)</li>
+<li class=""><code>geometry_msgs</code>: Geometric data (poses, vectors, quaternions)</li>
+<li class=""><code>nav_msgs</code>: Navigation data (paths, occupancy grids)</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="many-to-many-communication">Many-to-Many Communication<a href="#many-to-many-communication" class="hash-link" aria-label="Direct link to Many-to-Many Communication" title="Direct link to Many-to-Many Communication" translate="no">​</a></h4>
+<p>Topics support many-to-many communication patterns. Multiple nodes can publish to the same topic, and multiple nodes can subscribe to the same topic. This enables flexible data distribution patterns.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="quality-of-service-qos-settings">Quality of Service (QoS) Settings<a href="#quality-of-service-qos-settings" class="hash-link" aria-label="Direct link to Quality of Service (QoS) Settings" title="Direct link to Quality of Service (QoS) Settings" translate="no">​</a></h3>
+<p>Topics in ROS 2 support Quality of Service (QoS) settings that allow fine-tuning of communication behavior:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="reliability">Reliability<a href="#reliability" class="hash-link" aria-label="Direct link to Reliability" title="Direct link to Reliability" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Reliable</strong>: All messages are guaranteed to be delivered (may be slower)</li>
+<li class=""><strong>Best Effort</strong>: Messages may be lost (faster but not guaranteed)</li>
+</ul>
+<p>For example, sensor data might use best effort for real-time performance, while critical safety messages would use reliable delivery.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="durability">Durability<a href="#durability" class="hash-link" aria-label="Direct link to Durability" title="Direct link to Durability" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Transient Local</strong>: Late-joining subscribers receive the last message published</li>
+<li class=""><strong>Volatile</strong>: New subscribers only receive future messages</li>
+</ul>
+<p>This is useful for static data like robot configuration that new nodes need to receive immediately.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="history">History<a href="#history" class="hash-link" aria-label="Direct link to History" title="Direct link to History" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Keep Last</strong>: Store only the most recent messages</li>
+<li class=""><strong>Keep All</strong>: Store all messages (use with caution due to memory usage)</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="rate-and-deadline">Rate and Deadline<a href="#rate-and-deadline" class="hash-link" aria-label="Direct link to Rate and Deadline" title="Direct link to Rate and Deadline" translate="no">​</a></h4>
+<p>These settings allow for time-based constraints on message delivery, important for real-time robotic systems.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="topic-usage-in-humanoid-robots">Topic Usage in Humanoid Robots<a href="#topic-usage-in-humanoid-robots" class="hash-link" aria-label="Direct link to Topic Usage in Humanoid Robots" title="Direct link to Topic Usage in Humanoid Robots" translate="no">​</a></h3>
+<p>Topics are extensively used in humanoid robots for various purposes:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="sensor-data-distribution">Sensor Data Distribution<a href="#sensor-data-distribution" class="hash-link" aria-label="Direct link to Sensor Data Distribution" title="Direct link to Sensor Data Distribution" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/joint_states</code>: Current positions, velocities, and efforts of robot joints</li>
+<li class=""><code>/imu/data</code>: Inertial measurement unit data for orientation and acceleration</li>
+<li class=""><code>/camera/color/image_raw</code>: Raw image data from cameras</li>
+<li class=""><code>/scan</code>: Laser scan data for obstacle detection</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="state-information">State Information<a href="#state-information" class="hash-link" aria-label="Direct link to State Information" title="Direct link to State Information" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/robot_state</code>: Overall robot state information</li>
+<li class=""><code>/tf</code>: Transform data between coordinate frames</li>
+<li class=""><code>/battery_status</code>: Battery level and health information</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="control-commands">Control Commands<a href="#control-commands" class="hash-link" aria-label="Direct link to Control Commands" title="Direct link to Control Commands" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/cmd_vel</code>: Velocity commands for base movement</li>
+<li class=""><code>/arm_controller/commands</code>: Commands for arm movements</li>
+<li class=""><code>/head_controller/commands</code>: Commands for head movements</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="creating-and-using-topics">Creating and Using Topics<a href="#creating-and-using-topics" class="hash-link" aria-label="Direct link to Creating and Using Topics" title="Direct link to Creating and Using Topics" translate="no">​</a></h3>
+<p>To use topics, nodes must:</p>
+<ol>
+<li class=""><strong>Create a Publisher</strong>: Define a publisher for a specific topic name and message type</li>
+<li class=""><strong>Publish Messages</strong>: Send messages to the topic at appropriate intervals</li>
+<li class=""><strong>Create a Subscriber</strong>: Define a subscriber for a specific topic name and message type</li>
+<li class=""><strong>Process Messages</strong>: Implement callback functions to handle incoming messages</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="topic-tools">Topic Tools<a href="#topic-tools" class="hash-link" aria-label="Direct link to Topic Tools" title="Direct link to Topic Tools" translate="no">​</a></h3>
+<p>ROS 2 provides several tools for working with topics:</p>
+<ul>
+<li class=""><code>ros2 topic list</code>: Shows all active topics</li>
+<li class=""><code>ros2 topic echo &lt;topic_name&gt;</code>: Displays messages being published to a topic</li>
+<li class=""><code>ros2 topic info &lt;topic_name&gt;</code>: Shows information about a topic and its publishers/subscribers</li>
+<li class=""><code>ros2 topic pub &lt;topic_name&gt; &lt;msg_type&gt; &lt;args&gt;</code>: Publishes messages to a topic from the command line</li>
+</ul>
+<p>These tools are invaluable for debugging and understanding the data flow in robot systems.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="service-definition-and-explanation">Service Definition and Explanation<a href="#service-definition-and-explanation" class="hash-link" aria-label="Direct link to Service Definition and Explanation" title="Direct link to Service Definition and Explanation" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-a-service">What is a Service?<a href="#what-is-a-service" class="hash-link" aria-label="Direct link to What is a Service?" title="Direct link to What is a Service?" translate="no">​</a></h3>
+<p>A service in ROS 2 provides a request-response communication pattern between nodes. Unlike topics, which provide asynchronous, one-way communication, services offer synchronous, two-way communication. A node sends a request to a service and waits for a response. This is similar to a function call in traditional programming, but across the network between different nodes.</p>
+<p>Services are essential for operations that require a response or confirmation, such as configuration changes, specific actions, or queries that return results.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="service-characteristics">Service Characteristics<a href="#service-characteristics" class="hash-link" aria-label="Direct link to Service Characteristics" title="Direct link to Service Characteristics" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="synchronous-communication">Synchronous Communication<a href="#synchronous-communication" class="hash-link" aria-label="Direct link to Synchronous Communication" title="Direct link to Synchronous Communication" translate="no">​</a></h4>
+<p>Services provide synchronous communication where the client node sends a request and waits for a response. This ensures that the client receives a response before continuing, which is important for operations that require confirmation or results.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="request-response-pattern">Request-Response Pattern<a href="#request-response-pattern" class="hash-link" aria-label="Direct link to Request-Response Pattern" title="Direct link to Request-Response Pattern" translate="no">​</a></h4>
+<p>Each service has two message types:</p>
+<ul>
+<li class=""><strong>Request</strong>: The message sent by the client to the service server</li>
+<li class=""><strong>Response</strong>: The message sent by the service server back to the client</li>
+</ul>
+<p>For example, a service to move a robot joint might have:</p>
+<ul>
+<li class="">Request: Joint name, target position, speed</li>
+<li class="">Response: Success flag, error message if any</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="one-to-one-communication">One-to-One Communication<a href="#one-to-one-communication" class="hash-link" aria-label="Direct link to One-to-One Communication" title="Direct link to One-to-One Communication" translate="no">​</a></h4>
+<p>Unlike topics which support many-to-many communication, services typically involve one server and one client at a time. However, multiple clients can use the same service sequentially.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="blocking-operation">Blocking Operation<a href="#blocking-operation" class="hash-link" aria-label="Direct link to Blocking Operation" title="Direct link to Blocking Operation" translate="no">​</a></h4>
+<p>When a client calls a service, it typically blocks until it receives a response or a timeout occurs. This ensures that the operation completes before the client continues.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="service-structure">Service Structure<a href="#service-structure" class="hash-link" aria-label="Direct link to Service Structure" title="Direct link to Service Structure" translate="no">​</a></h3>
+<p>Services are defined using service definition files with the <code>.srv</code> extension. These files contain two parts separated by a line with three dashes (<code>---</code>):</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain"># Request part (above the ---)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">float64 target_position</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">string joint_name</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">---</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"># Response part (below the ---)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">bool success</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">string message</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="quality-of-service-for-services">Quality of Service for Services<a href="#quality-of-service-for-services" class="hash-link" aria-label="Direct link to Quality of Service for Services" title="Direct link to Quality of Service for Services" translate="no">​</a></h3>
+<p>While services don&#x27;t use the same QoS settings as topics, they do have timeout configurations that determine how long a client will wait for a response before giving up.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="service-usage-in-humanoid-robots">Service Usage in Humanoid Robots<a href="#service-usage-in-humanoid-robots" class="hash-link" aria-label="Direct link to Service Usage in Humanoid Robots" title="Direct link to Service Usage in Humanoid Robots" translate="no">​</a></h3>
+<p>Services are commonly used in humanoid robots for operations that require immediate responses:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuration-requests">Configuration Requests<a href="#configuration-requests" class="hash-link" aria-label="Direct link to Configuration Requests" title="Direct link to Configuration Requests" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/set_parameters</code>: Change robot configuration parameters</li>
+<li class=""><code>/load_map</code>: Load a new map for navigation</li>
+<li class=""><code>/set_mode</code>: Change robot operational mode</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-requests">Action Requests<a href="#action-requests" class="hash-link" aria-label="Direct link to Action Requests" title="Direct link to Action Requests" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/move_joint</code>: Move a specific joint to a target position</li>
+<li class=""><code>/gripper_control</code>: Open or close a gripper</li>
+<li class=""><code>/reset_odometry</code>: Reset the robot&#x27;s position estimate</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="query-operations">Query Operations<a href="#query-operations" class="hash-link" aria-label="Direct link to Query Operations" title="Direct link to Query Operations" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/get_robot_pose</code>: Get the current robot position</li>
+<li class=""><code>/get_battery_status</code>: Get battery level and health</li>
+<li class=""><code>/get_joint_positions</code>: Get current positions of all joints</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="creating-and-using-services">Creating and Using Services<a href="#creating-and-using-services" class="hash-link" aria-label="Direct link to Creating and Using Services" title="Direct link to Creating and Using Services" translate="no">​</a></h3>
+<p>To use services, nodes must:</p>
+<ol>
+<li class=""><strong>Create a Service Server</strong>: Define a service with a specific name and message type, and implement a callback function to handle requests</li>
+<li class=""><strong>Create a Service Client</strong>: Define a client for a specific service name and message type</li>
+<li class=""><strong>Send Requests</strong>: Create request objects and send them to the service</li>
+<li class=""><strong>Process Responses</strong>: Handle the responses returned by the service</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="service-tools">Service Tools<a href="#service-tools" class="hash-link" aria-label="Direct link to Service Tools" title="Direct link to Service Tools" translate="no">​</a></h3>
+<p>ROS 2 provides tools for working with services:</p>
+<ul>
+<li class=""><code>ros2 service list</code>: Shows all available services</li>
+<li class=""><code>ros2 service info &lt;service_name&gt;</code>: Shows information about a specific service</li>
+<li class=""><code>ros2 service call &lt;service_name&gt; &lt;service_type&gt; &lt;request_args&gt;</code>: Calls a service from the command line</li>
+</ul>
+<p>These tools are useful for testing and debugging service-based functionality in robot systems.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-definition-and-explanation">Action Definition and Explanation<a href="#action-definition-and-explanation" class="hash-link" aria-label="Direct link to Action Definition and Explanation" title="Direct link to Action Definition and Explanation" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-an-action">What is an Action?<a href="#what-is-an-action" class="hash-link" aria-label="Direct link to What is an Action?" title="Direct link to What is an Action?" translate="no">​</a></h3>
+<p>An action in ROS 2 provides a communication pattern for long-running tasks that require feedback during execution. Actions combine features of both topics and services, offering a goal-oriented communication pattern with continuous feedback and final results. They are ideal for tasks that take a significant amount of time to complete and where the client needs to monitor progress or potentially cancel the operation.</p>
+<p>Actions are particularly important in robotics for tasks like navigation, manipulation, and calibration that require ongoing communication between the client and server during execution.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-characteristics">Action Characteristics<a href="#action-characteristics" class="hash-link" aria-label="Direct link to Action Characteristics" title="Direct link to Action Characteristics" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="goal-feedback-result-pattern">Goal-Feedback-Result Pattern<a href="#goal-feedback-result-pattern" class="hash-link" aria-label="Direct link to Goal-Feedback-Result Pattern" title="Direct link to Goal-Feedback-Result Pattern" translate="no">​</a></h4>
+<p>Actions follow a three-part communication pattern:</p>
+<ul>
+<li class=""><strong>Goal</strong>: The client sends a goal to the action server</li>
+<li class=""><strong>Feedback</strong>: The server sends periodic feedback updates during execution</li>
+<li class=""><strong>Result</strong>: The server sends a final result when the action completes</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="long-running-operations">Long-Running Operations<a href="#long-running-operations" class="hash-link" aria-label="Direct link to Long-Running Operations" title="Direct link to Long-Running Operations" translate="no">​</a></h4>
+<p>Actions are designed for operations that take a significant amount of time to complete, such as:</p>
+<ul>
+<li class="">Moving a robot to a distant location</li>
+<li class="">Performing a complex manipulation task</li>
+<li class="">Calibrating sensors or actuators</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="cancellation-support">Cancellation Support<a href="#cancellation-support" class="hash-link" aria-label="Direct link to Cancellation Support" title="Direct link to Cancellation Support" translate="no">​</a></h4>
+<p>Unlike services, actions support cancellation. A client can request to cancel an action while it&#x27;s in progress, allowing for responsive and safe robot behavior.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="preemption">Preemption<a href="#preemption" class="hash-link" aria-label="Direct link to Preemption" title="Direct link to Preemption" translate="no">​</a></h4>
+<p>Actions support preemption, where a new goal can replace a currently executing goal, which is useful for dynamic environments.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-structure">Action Structure<a href="#action-structure" class="hash-link" aria-label="Direct link to Action Structure" title="Direct link to Action Structure" translate="no">​</a></h3>
+<p>Actions are defined using action definition files with the <code>.action</code> extension. These files contain three parts separated by lines with three dashes (<code>---</code>):</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain"># Goal part (before first ---)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">float64 target_x</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">float64 target_y</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">float64 target_theta</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">---</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"># Result part (between ---)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">bool success</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">string message</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">---</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"># Feedback part (after second ---)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">float64 current_x</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">float64 current_y</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">float64 current_theta</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">int32 percent_complete</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-states">Action States<a href="#action-states" class="hash-link" aria-label="Direct link to Action States" title="Direct link to Action States" translate="no">​</a></h3>
+<p>Actions can be in various states during their lifecycle:</p>
+<ul>
+<li class=""><strong>Pending</strong>: Goal received but not yet started</li>
+<li class=""><strong>Active</strong>: Goal is currently being processed</li>
+<li class=""><strong>Succeeded</strong>: Goal completed successfully</li>
+<li class=""><strong>Aborted</strong>: Goal execution failed</li>
+<li class=""><strong>Preempted</strong>: Goal was replaced by a new goal</li>
+<li class=""><strong>Canceled</strong>: Goal was canceled by the client</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-usage-in-humanoid-robots">Action Usage in Humanoid Robots<a href="#action-usage-in-humanoid-robots" class="hash-link" aria-label="Direct link to Action Usage in Humanoid Robots" title="Direct link to Action Usage in Humanoid Robots" translate="no">​</a></h3>
+<p>Actions are extensively used in humanoid robots for complex, long-running operations:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="navigation-tasks">Navigation Tasks<a href="#navigation-tasks" class="hash-link" aria-label="Direct link to Navigation Tasks" title="Direct link to Navigation Tasks" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/navigate_to_pose</code>: Move the robot to a specific location and orientation</li>
+<li class=""><code>/follow_waypoints</code>: Navigate through a sequence of waypoints</li>
+<li class=""><code>/explore_area</code>: Explore an unknown environment</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="manipulation-tasks">Manipulation Tasks<a href="#manipulation-tasks" class="hash-link" aria-label="Direct link to Manipulation Tasks" title="Direct link to Manipulation Tasks" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/pick_object</code>: Pick up an object from a specific location</li>
+<li class=""><code>/place_object</code>: Place an object at a specific location</li>
+<li class=""><code>/move_arm</code>: Move the robot&#x27;s arm to a specific configuration</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="calibration-and-maintenance">Calibration and Maintenance<a href="#calibration-and-maintenance" class="hash-link" aria-label="Direct link to Calibration and Maintenance" title="Direct link to Calibration and Maintenance" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/calibrate_sensors</code>: Calibrate various sensors</li>
+<li class=""><code>/check_balance</code>: Perform balance checks and adjustments</li>
+<li class=""><code>/perform_self_diagnostic</code>: Run diagnostic routines</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="creating-and-using-actions">Creating and Using Actions<a href="#creating-and-using-actions" class="hash-link" aria-label="Direct link to Creating and Using Actions" title="Direct link to Creating and Using Actions" translate="no">​</a></h3>
+<p>To use actions, nodes must:</p>
+<ol>
+<li class=""><strong>Create an Action Server</strong>: Define an action with a specific name and message type, and implement callback functions to handle goals, cancellations, and preemptions</li>
+<li class=""><strong>Create an Action Client</strong>: Define a client for a specific action name and message type</li>
+<li class=""><strong>Send Goals</strong>: Create goal objects and send them to the action server</li>
+<li class=""><strong>Monitor Progress</strong>: Receive and process feedback messages during execution</li>
+<li class=""><strong>Receive Results</strong>: Handle the final result when the action completes</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-tools">Action Tools<a href="#action-tools" class="hash-link" aria-label="Direct link to Action Tools" title="Direct link to Action Tools" translate="no">​</a></h3>
+<p>ROS 2 provides tools for working with actions:</p>
+<ul>
+<li class=""><code>ros2 action list</code>: Shows all available actions</li>
+<li class=""><code>ros2 action info &lt;action_name&gt;</code>: Shows information about a specific action</li>
+<li class=""><code>ros2 action send_goal &lt;action_name&gt; &lt;action_type&gt; &lt;goal_args&gt;</code>: Sends a goal to an action from the command line</li>
+</ul>
+<p>These tools are valuable for testing and debugging action-based functionality in robot systems.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-to-use-actions-vs-services-vs-topics">When to Use Actions vs. Services vs. Topics<a href="#when-to-use-actions-vs-services-vs-topics" class="hash-link" aria-label="Direct link to When to Use Actions vs. Services vs. Topics" title="Direct link to When to Use Actions vs. Services vs. Topics" translate="no">​</a></h3>
+<p>Choosing the right communication primitive depends on the specific requirements:</p>
+<ul>
+<li class=""><strong>Use Topics</strong> for continuous data streams (sensor data, robot state)</li>
+<li class=""><strong>Use Services</strong> for quick, synchronous operations that return a result immediately</li>
+<li class=""><strong>Use Actions</strong> for long-running operations that require feedback or the possibility of cancellation</li>
+</ul>
+<p>Actions provide the most sophisticated communication pattern in ROS 2, making them essential for complex robotic behaviors.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="practical-examples-with-humanoid-robots">Practical Examples with Humanoid Robots<a href="#practical-examples-with-humanoid-robots" class="hash-link" aria-label="Direct link to Practical Examples with Humanoid Robots" title="Direct link to Practical Examples with Humanoid Robots" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="communication-patterns-in-real-humanoid-systems">Communication Patterns in Real Humanoid Systems<a href="#communication-patterns-in-real-humanoid-systems" class="hash-link" aria-label="Direct link to Communication Patterns in Real Humanoid Systems" title="Direct link to Communication Patterns in Real Humanoid Systems" translate="no">​</a></h3>
+<p>Understanding how communication primitives work in practice is essential for developing effective humanoid robot systems. Let&#x27;s explore how these patterns manifest in real-world humanoid robot applications.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-1-walking-pattern-generation">Example 1: Walking Pattern Generation<a href="#example-1-walking-pattern-generation" class="hash-link" aria-label="Direct link to Example 1: Walking Pattern Generation" title="Direct link to Example 1: Walking Pattern Generation" translate="no">​</a></h3>
+<p>Consider a humanoid robot that needs to walk to a specific location. This involves multiple communication patterns:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="topic-communication">Topic Communication<a href="#topic-communication" class="hash-link" aria-label="Direct link to Topic Communication" title="Direct link to Topic Communication" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/joint_states</code>: Published by the robot&#x27;s joint controllers, providing real-time information about joint angles and velocities</li>
+<li class=""><code>/imu/data</code>: Published by the IMU sensor, providing orientation and acceleration data for balance control</li>
+<li class=""><code>/tf</code>: Published by the transform broadcaster, providing the relationship between different coordinate frames</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="service-communication">Service Communication<a href="#service-communication" class="hash-link" aria-label="Direct link to Service Communication" title="Direct link to Service Communication" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/balance_control/set_mode</code>: A service that allows switching between different balance control modes (e.g., standing, walking, sitting)</li>
+<li class=""><code>/gait_planner/load_trajectory</code>: A service to load predefined walking patterns</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-communication">Action Communication<a href="#action-communication" class="hash-link" aria-label="Direct link to Action Communication" title="Direct link to Action Communication" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/walking_controller/move_to_pose</code>: An action that takes a destination pose as a goal, provides feedback about the current step and balance status, and returns a result indicating success or failure</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-2-object-manipulation">Example 2: Object Manipulation<a href="#example-2-object-manipulation" class="hash-link" aria-label="Direct link to Example 2: Object Manipulation" title="Direct link to Example 2: Object Manipulation" translate="no">​</a></h3>
+<p>When a humanoid robot needs to pick up an object, the communication follows this pattern:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="topic-communication-1">Topic Communication<a href="#topic-communication-1" class="hash-link" aria-label="Direct link to Topic Communication" title="Direct link to Topic Communication" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/camera/color/image_raw</code>: Camera feed for object detection</li>
+<li class=""><code>/arm_controller/state</code>: Current state of the arm controller</li>
+<li class=""><code>/gripper/joint_states</code>: State of the gripper joints</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="service-communication-1">Service Communication<a href="#service-communication-1" class="hash-link" aria-label="Direct link to Service Communication" title="Direct link to Service Communication" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/object_detection/detect_objects</code>: A service that processes the camera image and returns a list of detected objects with their poses</li>
+<li class=""><code>/inverse_kinematics/solve</code>: A service that calculates the joint angles needed to reach a specific end-effector pose</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-communication-1">Action Communication<a href="#action-communication-1" class="hash-link" aria-label="Direct link to Action Communication" title="Direct link to Action Communication" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/arm_controller/follow_joint_trajectory</code>: An action that moves the arm along a planned trajectory, providing feedback about progress and returning success or failure</li>
+<li class=""><code>/gripper_controller/grasp</code>: An action that controls the gripper to grasp an object, providing feedback about grip force and returning success when the object is securely held</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-3-human-robot-interaction">Example 3: Human-Robot Interaction<a href="#example-3-human-robot-interaction" class="hash-link" aria-label="Direct link to Example 3: Human-Robot Interaction" title="Direct link to Example 3: Human-Robot Interaction" translate="no">​</a></h3>
+<p>For a humanoid robot engaging in social interaction:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="topic-communication-2">Topic Communication<a href="#topic-communication-2" class="hash-link" aria-label="Direct link to Topic Communication" title="Direct link to Topic Communication" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/audio/input</code>: Microphone input for speech recognition</li>
+<li class=""><code>/face_detector/face_locations</code>: Detected face positions for attention control</li>
+<li class=""><code>/robot_state</code>: Current emotional state or mode of the robot</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="service-communication-2">Service Communication<a href="#service-communication-2" class="hash-link" aria-label="Direct link to Service Communication" title="Direct link to Service Communication" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/speech_recognition/recognize</code>: A service that processes audio input and returns recognized text</li>
+<li class=""><code>/dialog_manager/get_response</code>: A service that generates appropriate responses based on the conversation context</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-communication-2">Action Communication<a href="#action-communication-2" class="hash-link" aria-label="Direct link to Action Communication" title="Direct link to Action Communication" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/head_controller/look_at</code>: An action that makes the robot look at a specific person, providing feedback about gaze direction</li>
+<li class=""><code>/animation_player/play_animation</code>: An action that plays a sequence of movements for expressive gestures</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="communication-pattern-selection-guidelines">Communication Pattern Selection Guidelines<a href="#communication-pattern-selection-guidelines" class="hash-link" aria-label="Direct link to Communication Pattern Selection Guidelines" title="Direct link to Communication Pattern Selection Guidelines" translate="no">​</a></h3>
+<p>When designing communication for humanoid robots, consider these guidelines:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="use-topics-when">Use Topics When:<a href="#use-topics-when" class="hash-link" aria-label="Direct link to Use Topics When:" title="Direct link to Use Topics When:" translate="no">​</a></h4>
+<ul>
+<li class="">Data needs to be continuously streamed (sensor data, robot state)</li>
+<li class="">Multiple nodes need to consume the same data</li>
+<li class="">Real-time performance is critical</li>
+<li class="">The data producer doesn&#x27;t need to know who consumes the data</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="use-services-when">Use Services When:<a href="#use-services-when" class="hash-link" aria-label="Direct link to Use Services When:" title="Direct link to Use Services When:" translate="no">​</a></h4>
+<ul>
+<li class="">A specific task needs to be performed and a result returned</li>
+<li class="">The operation is relatively quick (less than a few seconds)</li>
+<li class="">The client needs to wait for completion before proceeding</li>
+<li class="">A simple request-response pattern is sufficient</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="use-actions-when">Use Actions When:<a href="#use-actions-when" class="hash-link" aria-label="Direct link to Use Actions When:" title="Direct link to Use Actions When:" translate="no">​</a></h4>
+<ul>
+<li class="">The operation takes a long time to complete</li>
+<li class="">The client needs feedback during execution</li>
+<li class="">The operation might need to be canceled or preempted</li>
+<li class="">The result depends on conditions that may change during execution</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="quality-of-service-considerations">Quality of Service Considerations<a href="#quality-of-service-considerations" class="hash-link" aria-label="Direct link to Quality of Service Considerations" title="Direct link to Quality of Service Considerations" translate="no">​</a></h3>
+<p>Different communication patterns in humanoid robots require different QoS settings:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="safety-critical-topics">Safety-Critical Topics<a href="#safety-critical-topics" class="hash-link" aria-label="Direct link to Safety-Critical Topics" title="Direct link to Safety-Critical Topics" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/emergency_stop</code>: Reliable, transient local durability</li>
+<li class=""><code>/motor_torque_limits</code>: Reliable, transient local durability</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="performance-critical-topics">Performance-Critical Topics<a href="#performance-critical-topics" class="hash-link" aria-label="Direct link to Performance-Critical Topics" title="Direct link to Performance-Critical Topics" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/camera/image_raw</code>: Best effort, volatile (some dropped frames acceptable)</li>
+<li class=""><code>/imu/data</code>: Reliable, volatile (critical for balance)</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuration-services">Configuration Services<a href="#configuration-services" class="hash-link" aria-label="Direct link to Configuration Services" title="Direct link to Configuration Services" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/set_parameters</code>: Reliable, timeout appropriate for operation</li>
+<li class=""><code>/load_config</code>: Reliable, longer timeout acceptable</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="interactive-actions">Interactive Actions<a href="#interactive-actions" class="hash-link" aria-label="Direct link to Interactive Actions" title="Direct link to Interactive Actions" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/speak_text</code>: Best effort for feedback, reliable for goal/result</li>
+<li class=""><code>/navigate_to_pose</code>: Reliable for goal/result, best effort for feedback</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="integration-example-navigation-and-manipulation">Integration Example: Navigation and Manipulation<a href="#integration-example-navigation-and-manipulation" class="hash-link" aria-label="Direct link to Integration Example: Navigation and Manipulation" title="Direct link to Integration Example: Navigation and Manipulation" translate="no">​</a></h3>
+<p>A complex task like &quot;go to the kitchen and pick up a cup&quot; would integrate all communication primitives:</p>
+<ol>
+<li class="">
+<p><strong>Navigation Phase</strong>:</p>
+<ul>
+<li class="">Topics: <code>/amcl_pose</code> (localization), <code>/scan</code> (obstacle detection)</li>
+<li class="">Service: <code>/move_base_flex/get_path</code> (path planning)</li>
+<li class="">Action: <code>/move_base_flex/exe_path</code> (execute navigation)</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Manipulation Phase</strong>:</p>
+<ul>
+<li class="">Topics: <code>/camera/color/image_raw</code> (object detection), <code>/joint_states</code> (feedback)</li>
+<li class="">Service: <code>/object_detection/detect_cup</code> (identify target)</li>
+<li class="">Action: <code>/arm_controller/follow_joint_trajectory</code> (reach and grasp)</li>
+</ul>
+</li>
+</ol>
+<p>This integrated approach allows humanoid robots to perform complex, multi-step tasks by combining the appropriate communication patterns for each subtask.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="quality-of-service-qos-concepts">Quality of Service (QoS) Concepts<a href="#quality-of-service-qos-concepts" class="hash-link" aria-label="Direct link to Quality of Service (QoS) Concepts" title="Direct link to Quality of Service (QoS) Concepts" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="introduction-to-qos-in-ros-2">Introduction to QoS in ROS 2<a href="#introduction-to-qos-in-ros-2" class="hash-link" aria-label="Direct link to Introduction to QoS in ROS 2" title="Direct link to Introduction to QoS in ROS 2" translate="no">​</a></h3>
+<p>Quality of Service (QoS) in ROS 2 refers to a set of policies that define how data is communicated between publishers and subscribers. QoS settings allow developers to fine-tune the behavior of their communication to match the specific requirements of their application. This is particularly important in robotics applications where different data streams have different requirements for reliability, latency, and durability.</p>
+<p>QoS policies are negotiated between publishers and subscribers when they discover each other. If the QoS policies are incompatible, the communication may not work as expected.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="core-qos-policies">Core QoS Policies<a href="#core-qos-policies" class="hash-link" aria-label="Direct link to Core QoS Policies" title="Direct link to Core QoS Policies" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="reliability-policy">Reliability Policy<a href="#reliability-policy" class="hash-link" aria-label="Direct link to Reliability Policy" title="Direct link to Reliability Policy" translate="no">​</a></h4>
+<p>The reliability policy determines whether messages are guaranteed to be delivered:</p>
+<ul>
+<li class=""><strong>Reliable</strong>: All messages are guaranteed to be delivered. If a message is lost, it will be resent. This is important for critical data like safety messages or control commands.</li>
+<li class=""><strong>Best Effort</strong>: Messages may be lost. This is suitable for data where occasional loss is acceptable, such as video streams or high-frequency sensor data.</li>
+</ul>
+<p>For humanoid robots, reliable communication is essential for safety-critical systems like emergency stops, while best effort may be acceptable for high-frequency sensor data where the latest value is more important than receiving every single message.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="durability-policy">Durability Policy<a href="#durability-policy" class="hash-link" aria-label="Direct link to Durability Policy" title="Direct link to Durability Policy" translate="no">​</a></h4>
+<p>The durability policy determines how messages are handled for late-joining subscribers:</p>
+<ul>
+<li class=""><strong>Transient Local</strong>: The publisher keeps the most recent message for each topic and sends it to new subscribers immediately. This is useful for static data like robot configuration or maps.</li>
+<li class=""><strong>Volatile</strong>: New subscribers only receive messages published after they join. This is suitable for continuous data streams like sensor readings.</li>
+</ul>
+<p>In humanoid robots, transient local durability is often used for topics like <code>/robot_description</code> (which contains the URDF), so new nodes immediately receive the robot&#x27;s structure.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="history-policy">History Policy<a href="#history-policy" class="hash-link" aria-label="Direct link to History Policy" title="Direct link to History Policy" translate="no">​</a></h4>
+<p>The history policy determines how many messages are stored for each topic:</p>
+<ul>
+<li class=""><strong>Keep Last</strong>: Only the most recent messages are kept. The number of messages to keep is configurable.</li>
+<li class=""><strong>Keep All</strong>: All messages are kept. This should be used carefully as it can consume significant memory.</li>
+</ul>
+<p>For humanoid robots, keep last is typically used for sensor data where only the most recent values are relevant.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="depth-policy">Depth Policy<a href="#depth-policy" class="hash-link" aria-label="Direct link to Depth Policy" title="Direct link to Depth Policy" translate="no">​</a></h4>
+<p>When using the &quot;Keep Last&quot; history policy, the depth determines how many samples are kept in the queue. For example, a depth of 10 means the last 10 messages are stored.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="advanced-qos-settings">Advanced QoS Settings<a href="#advanced-qos-settings" class="hash-link" aria-label="Direct link to Advanced QoS Settings" title="Direct link to Advanced QoS Settings" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="deadline-policy">Deadline Policy<a href="#deadline-policy" class="hash-link" aria-label="Direct link to Deadline Policy" title="Direct link to Deadline Policy" translate="no">​</a></h4>
+<p>The deadline policy tells how often data should be published. This helps detect when a publisher is not sending updates as expected.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="lifespan-policy">Lifespan Policy<a href="#lifespan-policy" class="hash-link" aria-label="Direct link to Lifespan Policy" title="Direct link to Lifespan Policy" translate="no">​</a></h4>
+<p>The lifespan policy sets a time limit for messages. Messages older than this limit are automatically deleted.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="liveliness-policy">Liveliness Policy<a href="#liveliness-policy" class="hash-link" aria-label="Direct link to Liveliness Policy" title="Direct link to Liveliness Policy" translate="no">​</a></h4>
+<p>The liveliness policy lets nodes detect when other nodes or topics become unavailable. This is important for safety systems in humanoid robots.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="qos-in-humanoid-robot-applications">QoS in Humanoid Robot Applications<a href="#qos-in-humanoid-robot-applications" class="hash-link" aria-label="Direct link to QoS in Humanoid Robot Applications" title="Direct link to QoS in Humanoid Robot Applications" translate="no">​</a></h3>
+<p>Different aspects of humanoid robot systems require different QoS settings:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="sensor-data">Sensor Data<a href="#sensor-data" class="hash-link" aria-label="Direct link to Sensor Data" title="Direct link to Sensor Data" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/joint_states</code>: Reliable, volatile, keep last (10) - Need all joint data, but only recent values matter</li>
+<li class=""><code>/imu/data</code>: Reliable, volatile, keep last (5) - Critical for balance, but only recent data needed</li>
+<li class=""><code>/camera/color/image_raw</code>: Best effort, volatile, keep last (1) - OK to drop frames, only latest frame matters</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="control-commands-1">Control Commands<a href="#control-commands-1" class="hash-link" aria-label="Direct link to Control Commands" title="Direct link to Control Commands" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/cmd_vel</code>: Reliable, volatile, keep last (1) - Need to receive commands reliably, but only latest command matters</li>
+<li class=""><code>/joint_group_position_controller/command</code>: Reliable, volatile, keep last (1) - Critical for safety</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="static-information">Static Information<a href="#static-information" class="hash-link" aria-label="Direct link to Static Information" title="Direct link to Static Information" translate="no">​</a></h4>
+<ul>
+<li class=""><code>/robot_description</code>: Reliable, transient local, keep last (1) - New nodes need this immediately</li>
+<li class=""><code>/map</code>: Reliable, transient local, keep last (1) - New nodes need the map immediately</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="qos-matching-and-compatibility">QoS Matching and Compatibility<a href="#qos-matching-and-compatibility" class="hash-link" aria-label="Direct link to QoS Matching and Compatibility" title="Direct link to QoS Matching and Compatibility" translate="no">​</a></h3>
+<p>When a publisher and subscriber connect, their QoS policies are matched. Some policies must be compatible:</p>
+<ul>
+<li class="">Reliability: A reliable publisher can pair with a best-effort subscriber, but a best-effort publisher cannot pair with a reliable subscriber</li>
+<li class="">Durability: A transient local publisher can pair with a volatile subscriber, but not vice versa</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="setting-qos-in-code">Setting QoS in Code<a href="#setting-qos-in-code" class="hash-link" aria-label="Direct link to Setting QoS in Code" title="Direct link to Setting QoS in Code" translate="no">​</a></h3>
+<p>In ROS 2, QoS policies are set when creating publishers and subscribers. ROS 2 provides some predefined QoS profiles for common use cases:</p>
+<ul>
+<li class=""><code>rclcpp::QoS(10)</code>: Default profile with depth of 10</li>
+<li class=""><code>rmw_qos_profile_sensor_data</code>: Optimized for sensor data (best effort, volatile)</li>
+<li class=""><code>rmw_qos_profile_services_default</code>: Default for services (reliable, volatile)</li>
+<li class=""><code>rmw_qos_profile_parameter_events</code>: For parameter events</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="best-practices-for-qos">Best Practices for QoS<a href="#best-practices-for-qos" class="hash-link" aria-label="Direct link to Best Practices for QoS" title="Direct link to Best Practices for QoS" translate="no">​</a></h3>
+<ol>
+<li class="">
+<p><strong>Match QoS to Requirements</strong>: Choose QoS settings based on the specific needs of your data, not just default settings.</p>
+</li>
+<li class="">
+<p><strong>Consider Resource Usage</strong>: Transient local durability and keep all history can consume significant memory.</p>
+</li>
+<li class="">
+<p><strong>Test with Different Settings</strong>: Experiment with different QoS settings to find the optimal balance between performance and reliability.</p>
+</li>
+<li class="">
+<p><strong>Document QoS Choices</strong>: Document why specific QoS settings were chosen for each topic, especially in complex systems like humanoid robots.</p>
+</li>
+<li class="">
+<p><strong>Monitor Performance</strong>: Use ROS 2 tools to monitor the performance of your communication and adjust QoS settings as needed.</p>
+</li>
+</ol>
+<p>Understanding and properly configuring QoS settings is crucial for creating robust and efficient communication in humanoid robot systems.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="comparison-of-communication-primitives">Comparison of Communication Primitives<a href="#comparison-of-communication-primitives" class="hash-link" aria-label="Direct link to Comparison of Communication Primitives" title="Direct link to Comparison of Communication Primitives" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="overview-of-ros-2-communication-primitives">Overview of ROS 2 Communication Primitives<a href="#overview-of-ros-2-communication-primitives" class="hash-link" aria-label="Direct link to Overview of ROS 2 Communication Primitives" title="Direct link to Overview of ROS 2 Communication Primitives" translate="no">​</a></h3>
+<p>ROS 2 provides three primary communication patterns: topics, services, and actions. Each serves different purposes and has distinct characteristics. Understanding when to use each is crucial for effective robot system design.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="detailed-comparison-table">Detailed Comparison Table<a href="#detailed-comparison-table" class="hash-link" aria-label="Direct link to Detailed Comparison Table" title="Direct link to Detailed Comparison Table" translate="no">​</a></h3>
+<table><thead><tr><th>Aspect</th><th>Topics</th><th>Services</th><th>Actions</th></tr></thead><tbody><tr><td><strong>Communication Pattern</strong></td><td>Publish/Subscribe</td><td>Request/Response</td><td>Goal/Feedback/Result</td></tr><tr><td><strong>Synchronicity</strong></td><td>Asynchronous</td><td>Synchronous</td><td>Synchronous (but with feedback)</td></tr><tr><td><strong>Data Flow</strong></td><td>One-way (publisher to subscriber)</td><td>Two-way (request and response)</td><td>Two-way (goal, feedback, result)</td></tr><tr><td><strong>Duration</strong></td><td>Continuous</td><td>Immediate</td><td>Long-running</td></tr><tr><td><strong>Feedback</strong></td><td>No (unless another topic is used)</td><td>No (response is final)</td><td>Yes (continuous feedback during execution)</td></tr><tr><td><strong>Cancellation</strong></td><td>No</td><td>No</td><td>Yes</td></tr><tr><td><strong>Preemption</strong></td><td>No</td><td>No</td><td>Yes</td></tr><tr><td><strong>Use Case</strong></td><td>Continuous data streams</td><td>Quick operations with immediate results</td><td>Long-running operations requiring monitoring</td></tr><tr><td><strong>Examples</strong></td><td><code>/joint_states</code>, <code>/imu/data</code>, <code>/tf</code></td><td><code>/get_map</code>, <code>/set_mode</code>, <code>/transform_point</code></td><td><code>/move_base</code>, <code>/arm_controller</code>, <code>/pick_object</code></td></tr><tr><td><strong>Error Handling</strong></td><td>Publisher/subscriber discovery</td><td>Service call failure</td><td>Goal rejection, execution failure</td></tr><tr><td><strong>Performance</strong></td><td>High throughput</td><td>Medium (network round-trip)</td><td>Medium to low (extended communication)</td></tr><tr><td><strong>Complexity</strong></td><td>Low</td><td>Medium</td><td>High</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-to-use-each-primitive">When to Use Each Primitive<a href="#when-to-use-each-primitive" class="hash-link" aria-label="Direct link to When to Use Each Primitive" title="Direct link to When to Use Each Primitive" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="topics">Topics<a href="#topics" class="hash-link" aria-label="Direct link to Topics" title="Direct link to Topics" translate="no">​</a></h4>
+<p>Use topics when you need to:</p>
+<ul>
+<li class="">Stream continuous data (sensor readings, robot state)</li>
+<li class="">Broadcast information to multiple subscribers</li>
+<li class="">Achieve high-frequency communication</li>
+<li class="">Implement loose coupling between nodes</li>
+<li class="">Share data that multiple nodes need simultaneously</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="services">Services<a href="#services" class="hash-link" aria-label="Direct link to Services" title="Direct link to Services" translate="no">​</a></h4>
+<p>Use services when you need to:</p>
+<ul>
+<li class="">Perform a specific task and get an immediate result</li>
+<li class="">Execute operations that should complete quickly (under a few seconds)</li>
+<li class="">Implement request-response patterns</li>
+<li class="">Get information from another node (queries)</li>
+<li class="">Perform configuration changes that return success/failure</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="actions">Actions<a href="#actions" class="hash-link" aria-label="Direct link to Actions" title="Direct link to Actions" translate="no">​</a></h4>
+<p>Use actions when you need to:</p>
+<ul>
+<li class="">Execute long-running tasks (navigation, manipulation)</li>
+<li class="">Monitor progress during execution</li>
+<li class="">Allow for cancellation or preemption of tasks</li>
+<li class="">Provide feedback during task execution</li>
+<li class="">Handle operations that might fail partway through</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="communication-pattern-selection-decision-tree">Communication Pattern Selection Decision Tree<a href="#communication-pattern-selection-decision-tree" class="hash-link" aria-label="Direct link to Communication Pattern Selection Decision Tree" title="Direct link to Communication Pattern Selection Decision Tree" translate="no">​</a></h3>
+<p>When deciding which communication pattern to use, consider this decision tree:</p>
+<ol>
+<li class="">
+<p><strong>Does the operation need to return a result immediately?</strong></p>
+<ul>
+<li class="">Yes → Go to 2</li>
+<li class="">No → Likely a Topic</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Is the operation expected to complete quickly (under a few seconds)?</strong></p>
+<ul>
+<li class="">Yes → Service</li>
+<li class="">No → Go to 3</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Do you need to monitor progress during execution?</strong></p>
+<ul>
+<li class="">Yes → Action</li>
+<li class="">No → Go to 4</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Do you need the ability to cancel the operation?</strong></p>
+<ul>
+<li class="">Yes → Action</li>
+<li class="">No → Service (if result needed) or Topic (if no result needed)</li>
+</ul>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="hybrid-approaches">Hybrid Approaches<a href="#hybrid-approaches" class="hash-link" aria-label="Direct link to Hybrid Approaches" title="Direct link to Hybrid Approaches" translate="no">​</a></h3>
+<p>Sometimes, a combination of communication patterns works best:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="topic--service">Topic + Service<a href="#topic--service" class="hash-link" aria-label="Direct link to Topic + Service" title="Direct link to Topic + Service" translate="no">​</a></h4>
+<ul>
+<li class="">Use a topic for continuous status updates</li>
+<li class="">Use a service for specific commands or queries</li>
+<li class="">Example: Publish robot battery status continuously via topic, but use a service to request immediate charging</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="topic--action">Topic + Action<a href="#topic--action" class="hash-link" aria-label="Direct link to Topic + Action" title="Direct link to Topic + Action" translate="no">​</a></h4>
+<ul>
+<li class="">Use a topic for general state information</li>
+<li class="">Use an action for specific long-running tasks</li>
+<li class="">Example: Publish robot pose continuously, but use an action to navigate to a specific location</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="service--action">Service + Action<a href="#service--action" class="hash-link" aria-label="Direct link to Service + Action" title="Direct link to Service + Action" translate="no">​</a></h4>
+<ul>
+<li class="">Use a service for quick configuration</li>
+<li class="">Use an action for the actual execution</li>
+<li class="">Example: Use a service to plan a path, then use an action to follow the path</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="humanoid-robot-examples">Humanoid Robot Examples<a href="#humanoid-robot-examples" class="hash-link" aria-label="Direct link to Humanoid Robot Examples" title="Direct link to Humanoid Robot Examples" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="walking-control">Walking Control<a href="#walking-control" class="hash-link" aria-label="Direct link to Walking Control" title="Direct link to Walking Control" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Topic</strong>: <code>/joint_states</code> - Continuous feedback on joint positions</li>
+<li class=""><strong>Service</strong>: <code>/balance_control/set_mode</code> - Quick switch between standing/walking modes</li>
+<li class=""><strong>Action</strong>: <code>/walking_controller/move_to_pose</code> - Long-running navigation with feedback</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="object-manipulation">Object Manipulation<a href="#object-manipulation" class="hash-link" aria-label="Direct link to Object Manipulation" title="Direct link to Object Manipulation" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Topic</strong>: <code>/camera/color/image_raw</code> - Continuous camera feed</li>
+<li class=""><strong>Service</strong>: <code>/object_detection/detect_object</code> - Quick detection of objects</li>
+<li class=""><strong>Action</strong>: <code>/arm_controller/follow_joint_trajectory</code> - Long-running arm movement with feedback</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="human-robot-interaction">Human-Robot Interaction<a href="#human-robot-interaction" class="hash-link" aria-label="Direct link to Human-Robot Interaction" title="Direct link to Human-Robot Interaction" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Topic</strong>: <code>/audio/input</code> - Continuous audio stream</li>
+<li class=""><strong>Service</strong>: <code>/speech_recognition/recognize</code> - Quick speech-to-text conversion</li>
+<li class=""><strong>Action</strong>: <code>/animation_player/play_animation</code> - Long-running animation sequence</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="performance-considerations">Performance Considerations<a href="#performance-considerations" class="hash-link" aria-label="Direct link to Performance Considerations" title="Direct link to Performance Considerations" translate="no">​</a></h3>
+<p>Each communication primitive has different performance characteristics:</p>
+<ul>
+<li class=""><strong>Topics</strong> offer the highest throughput and lowest latency, making them ideal for real-time sensor data and control commands.</li>
+<li class=""><strong>Services</strong> have moderate performance with network round-trip overhead, suitable for operations that don&#x27;t require real-time performance.</li>
+<li class=""><strong>Actions</strong> have the highest overhead due to the complexity of the communication pattern, but provide the most functionality for complex operations.</li>
+</ul>
+<p>Understanding these differences helps in designing efficient and responsive humanoid robot systems.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="references">References<a href="#references" class="hash-link" aria-label="Direct link to References" title="Direct link to References" translate="no">​</a></h2>
+<ol>
+<li class="">
+<p>Macenski, S., Woodall, W., &amp; Faconti, N. (2019). Design and use paradigm of ROS 2. <em>IEEE Access</em>, 7, 153148-153154.</p>
+</li>
+<li class="">
+<p>ROS 2 Documentation. (2023). Quality of Service in ROS 2. <a href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-settings.html" target="_blank" rel="noopener noreferrer" class="">https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-settings.html</a></p>
+</li>
+<li class="">
+<p>Colomé, A., &amp; Torras, C. (2019). Real-time collision avoidance for robot manipulators: Scalable massively-parallel sphere-sweeping. <em>IEEE Robotics and Automation Letters</em>, 4(2), 1836-1843.</p>
+</li>
+<li class="">
+<p>Quigley, M., et al. (2009). ROS: an open-source Robot Operating System. <em>ICRA Workshop on Open Source Software</em>, 3(3.2), 5.</p>
+</li>
+<li class="">
+<p>Woodall, W., et al. (2018). ROS 2 design overview. <em>Open Robotics</em>.</p>
+</li>
+<li class="">
+<p>ROS 2 Working Groups. (2023). Quality of Service in ROS 2. <a href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-settings.html" target="_blank" rel="noopener noreferrer" class="">https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-settings.html</a></p>
+</li>
+<li class="">
+<p>Drakopoulos, A., &amp; Manolakos, E. S. (2019). A survey of middleware technologies for real-time communication in robotics. <em>Journal of Intelligent &amp; Robotic Systems</em>, 95(2), 369-390.</p>
+</li>
+<li class="">
+<p>Ferro, F., et al. (2016). RTComp: A real-time component model for ROS. <em>IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</em>, 1080-1087.</p>
+</li>
+<li class="">
+<p>Khusainov, R., et al. (2018). Comparison of communication architectures for cooperative robotic systems. <em>Procedia Computer Science</em>, 140, 334-343.</p>
+</li>
+<li class="">
+<p>Object Management Group. (2015). Data Distribution Service (DDS) 1.4 Specification. <a href="https://www.omg.org/spec/DDS/1.4/" target="_blank" rel="noopener noreferrer" class="">https://www.omg.org/spec/DDS/1.4/</a></p>
+</li>
+</ol></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/Muhammad-Bilal-Hussain/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-2-primitives.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-1-architecture"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Chapter 1: ROS 2 as the Nervous System of Physical AI</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2/chapter-3-ai-integration"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Chapter 3: Bridging AI Agents with ROS 2 using rclpy</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#node-definition-and-explanation" class="table-of-contents__link toc-highlight">Node Definition and Explanation</a><ul><li><a href="#what-is-a-node" class="table-of-contents__link toc-highlight">What is a Node?</a></li><li><a href="#node-characteristics" class="table-of-contents__link toc-highlight">Node Characteristics</a></li><li><a href="#creating-nodes" class="table-of-contents__link toc-highlight">Creating Nodes</a></li><li><a href="#node-lifecycle" class="table-of-contents__link toc-highlight">Node Lifecycle</a></li><li><a href="#naming-and-namespaces" class="table-of-contents__link toc-highlight">Naming and Namespaces</a></li><li><a href="#node-management" class="table-of-contents__link toc-highlight">Node Management</a></li></ul></li><li><a href="#topic-definition-and-explanation" class="table-of-contents__link toc-highlight">Topic Definition and Explanation</a><ul><li><a href="#what-is-a-topic" class="table-of-contents__link toc-highlight">What is a Topic?</a></li><li><a href="#topic-characteristics" class="table-of-contents__link toc-highlight">Topic Characteristics</a></li><li><a href="#quality-of-service-qos-settings" class="table-of-contents__link toc-highlight">Quality of Service (QoS) Settings</a></li><li><a href="#topic-usage-in-humanoid-robots" class="table-of-contents__link toc-highlight">Topic Usage in Humanoid Robots</a></li><li><a href="#creating-and-using-topics" class="table-of-contents__link toc-highlight">Creating and Using Topics</a></li><li><a href="#topic-tools" class="table-of-contents__link toc-highlight">Topic Tools</a></li></ul></li><li><a href="#service-definition-and-explanation" class="table-of-contents__link toc-highlight">Service Definition and Explanation</a><ul><li><a href="#what-is-a-service" class="table-of-contents__link toc-highlight">What is a Service?</a></li><li><a href="#service-characteristics" class="table-of-contents__link toc-highlight">Service Characteristics</a></li><li><a href="#service-structure" class="table-of-contents__link toc-highlight">Service Structure</a></li><li><a href="#quality-of-service-for-services" class="table-of-contents__link toc-highlight">Quality of Service for Services</a></li><li><a href="#service-usage-in-humanoid-robots" class="table-of-contents__link toc-highlight">Service Usage in Humanoid Robots</a></li><li><a href="#creating-and-using-services" class="table-of-contents__link toc-highlight">Creating and Using Services</a></li><li><a href="#service-tools" class="table-of-contents__link toc-highlight">Service Tools</a></li></ul></li><li><a href="#action-definition-and-explanation" class="table-of-contents__link toc-highlight">Action Definition and Explanation</a><ul><li><a href="#what-is-an-action" class="table-of-contents__link toc-highlight">What is an Action?</a></li><li><a href="#action-characteristics" class="table-of-contents__link toc-highlight">Action Characteristics</a></li><li><a href="#action-structure" class="table-of-contents__link toc-highlight">Action Structure</a></li><li><a href="#action-states" class="table-of-contents__link toc-highlight">Action States</a></li><li><a href="#action-usage-in-humanoid-robots" class="table-of-contents__link toc-highlight">Action Usage in Humanoid Robots</a></li><li><a href="#creating-and-using-actions" class="table-of-contents__link toc-highlight">Creating and Using Actions</a></li><li><a href="#action-tools" class="table-of-contents__link toc-highlight">Action Tools</a></li><li><a href="#when-to-use-actions-vs-services-vs-topics" class="table-of-contents__link toc-highlight">When to Use Actions vs. Services vs. Topics</a></li></ul></li><li><a href="#practical-examples-with-humanoid-robots" class="table-of-contents__link toc-highlight">Practical Examples with Humanoid Robots</a><ul><li><a href="#communication-patterns-in-real-humanoid-systems" class="table-of-contents__link toc-highlight">Communication Patterns in Real Humanoid Systems</a></li><li><a href="#example-1-walking-pattern-generation" class="table-of-contents__link toc-highlight">Example 1: Walking Pattern Generation</a></li><li><a href="#example-2-object-manipulation" class="table-of-contents__link toc-highlight">Example 2: Object Manipulation</a></li><li><a href="#example-3-human-robot-interaction" class="table-of-contents__link toc-highlight">Example 3: Human-Robot Interaction</a></li><li><a href="#communication-pattern-selection-guidelines" class="table-of-contents__link toc-highlight">Communication Pattern Selection Guidelines</a></li><li><a href="#quality-of-service-considerations" class="table-of-contents__link toc-highlight">Quality of Service Considerations</a></li><li><a href="#integration-example-navigation-and-manipulation" class="table-of-contents__link toc-highlight">Integration Example: Navigation and Manipulation</a></li></ul></li><li><a href="#quality-of-service-qos-concepts" class="table-of-contents__link toc-highlight">Quality of Service (QoS) Concepts</a><ul><li><a href="#introduction-to-qos-in-ros-2" class="table-of-contents__link toc-highlight">Introduction to QoS in ROS 2</a></li><li><a href="#core-qos-policies" class="table-of-contents__link toc-highlight">Core QoS Policies</a></li><li><a href="#advanced-qos-settings" class="table-of-contents__link toc-highlight">Advanced QoS Settings</a></li><li><a href="#qos-in-humanoid-robot-applications" class="table-of-contents__link toc-highlight">QoS in Humanoid Robot Applications</a></li><li><a href="#qos-matching-and-compatibility" class="table-of-contents__link toc-highlight">QoS Matching and Compatibility</a></li><li><a href="#setting-qos-in-code" class="table-of-contents__link toc-highlight">Setting QoS in Code</a></li><li><a href="#best-practices-for-qos" class="table-of-contents__link toc-highlight">Best Practices for QoS</a></li></ul></li><li><a href="#comparison-of-communication-primitives" class="table-of-contents__link toc-highlight">Comparison of Communication Primitives</a><ul><li><a href="#overview-of-ros-2-communication-primitives" class="table-of-contents__link toc-highlight">Overview of ROS 2 Communication Primitives</a></li><li><a href="#detailed-comparison-table" class="table-of-contents__link toc-highlight">Detailed Comparison Table</a></li><li><a href="#when-to-use-each-primitive" class="table-of-contents__link toc-highlight">When to Use Each Primitive</a></li><li><a href="#communication-pattern-selection-decision-tree" class="table-of-contents__link toc-highlight">Communication Pattern Selection Decision Tree</a></li><li><a href="#hybrid-approaches" class="table-of-contents__link toc-highlight">Hybrid Approaches</a></li><li><a href="#humanoid-robot-examples" class="table-of-contents__link toc-highlight">Humanoid Robot Examples</a></li><li><a href="#performance-considerations" class="table-of-contents__link toc-highlight">Performance Considerations</a></li></ul></li><li><a href="#references" class="table-of-contents__link toc-highlight">References</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/Book-Physical-AI-Humanoid-Robotics/docs/module-1-ros2">Text Book</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://stackoverflow.com/questions/tagged/docusaurus" target="_blank" rel="noopener noreferrer" class="footer__link-item">Stack Overflow<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/Book-Physical-AI-Humanoid-Robotics/blog">Blog</a></li><li class="footer__item"><a href="https://github.com/Muhammad-Bilal-Hussain/Book-Physical-AI-Humanoid-Robotics" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">© 2026 Physical AI Book</div></div></div></footer></div>
+</body>
+</html>
